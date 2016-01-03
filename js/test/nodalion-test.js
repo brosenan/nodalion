@@ -11,7 +11,7 @@ var bootstrap = Nodalion.namespace('/bootstrap', ['listMember']);
 
 describe('Nodalion', function(){
     var nodalion;
-    nodalion = new Nodalion('/tmp/ced.log');
+    nodalion = new Nodalion(__dirname + '/../../prolog/cedalion.pl', '/tmp/ced.log');
 
     describe('.namespace(name, concepts)', function(){
 	it('should create a namespace object with the given name and concepts', function(){

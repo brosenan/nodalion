@@ -3,8 +3,8 @@ var Namespace = require('./namespace.js');
 var CedalionInterface = require("./cedalionInterface.js");
 var cedParser = require('./cedParser.js');
 
-module.exports = function(logFile) {
-    this.ced = new CedalionInterface(logFile);
+module.exports = function(cedFile, logFile) {
+    this.ced = new CedalionInterface(cedFile, logFile);
 };
 
 var clazz = module.exports.prototype;

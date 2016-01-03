@@ -1,13 +1,16 @@
 :- [service, uuid].
 
 % Suppress warnings from Cedalion
-:- style_check(-singleton).
-:- style_check(-discontiguous).
-:- [cedalion].
-:- style_check(+singleton).
-:- style_check(+discontiguous).
 
 :- dynamic storedTerm/2, localStore/2, localQueue/2.
+
+go(CedFile) :-
+    style_check(-singleton),
+    style_check(-discontiguous),
+    [CedFile],
+    style_check(+singleton),
+    style_check(+discontiguous),
+    go.
 
 go :- read(Cmd),
       catch(mustSucceed(handleCmd(Cmd, Continue)), Error, handleError(Error)),

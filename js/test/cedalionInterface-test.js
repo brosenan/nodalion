@@ -13,7 +13,7 @@ var js = new Namespace('js');
 js._define(['exception']);
 
 describe('CedalionInterface', function(){
-    var ced = new CedalionInterface('/tmp/ced.log');
+    var ced = new CedalionInterface(__dirname + '/../../prolog/cedalion.pl', '/tmp/ced.log');
     describe('.eval(res, impred)', function(){
 	it('should return an event emitter', function(done){
 	    var X = {var:'X'};

@@ -26,9 +26,9 @@ function logger(out) {
     return input;
 }
 
-module.exports = function(logfile) {
+module.exports = function(cedFile, logfile) {
     var self = this;
-    this.prolog = spawn('swipl', ['-f', __dirname + '/../prolog/impred.pl', '-t', 'go']);
+    this.prolog = spawn('swipl', ['-f', __dirname + '/../prolog/impred.pl', '-t', "go('" + cedFile + "')"]);
     this.prolog.stdout.setEncoding('utf-8');
     if(logfile) {
 	this._log = logger(fs.createWriteStream(logfile));

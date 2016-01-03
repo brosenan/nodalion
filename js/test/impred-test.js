@@ -7,7 +7,7 @@ var $S = require('suspend'), $R = $S.resume, $T = function(gen) { return functio
 var Nodalion = require('../nodalion.js');
 var ns = Nodalion.namespace('/impred', ['testLocalStore', 'localStr', 'testNow', 'testUUID', 'testLocalQueue', 'testBase64Encode', 'testBase64Decode', 'testLoadNamespace']);
 
-var nodalion = new Nodalion('/tmp/impred-ced.log');
+var nodalion = new Nodalion(__dirname + '/../../prolog/cedalion.pl', '/tmp/impred-ced.log');
 
 describe('impred', function(){
     describe('local storage', function(){
