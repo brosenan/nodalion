@@ -1,6 +1,6 @@
 {
     "name": "nodalion",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "A framework for running Cedalion programs in the wild",
     "main": "index.js",
     "scripts": {
