@@ -1,25 +1,29 @@
 {
-  "name": "nodalion",
-  "version": "1.0.0",
-  "description": "A framework for running Cedalion programs in the wild",
-  "main": "index.js",
-  "scripts": {
-    "test": "node ./node_modules/jison/lib/cli.js js/cedGrammar.jison && mv ./cedGrammar.js js/ && ./node_modules/mocha/bin/mocha -C -R dot js/test"
-  },
-  "keywords": [
-    "nodalion",
-    "cedalion",
-    "nodejs"
-  ],
-  "author": "Boaz Rosenan <brosenan@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "jison": "^0.4.15",
-    "mocha": "^2.3.4"
-  },
-  "dependencies": {
-    "byline": "^4.2.1",
-    "suspend": "^0.7.0",
-    "temp": "^0.8.3"
-  }
+    "name": "nodalion",
+    "version": "1.0.0",
+    "description": "A framework for running Cedalion programs in the wild",
+    "main": "index.js",
+    "scripts": {
+	"test": "node ./node_modules/jison/lib/cli.js js/cedGrammar.jison && mv ./cedGrammar.js js/ && ./node_modules/mocha/bin/mocha -C -R dot js/test"
+    },
+    "keywords": [
+	"nodalion",
+	"cedalion",
+	"nodejs"
+    ],
+    "repository" :
+    { "type" : "git"
+      , "url" : "https://github.com/brosenan/nodalion.git"
+    },
+    "author": "Boaz Rosenan <brosenan@gmail.com>",
+    "license": "MIT",
+    "devDependencies": {
+	"jison": "^0.4.15",
+	"mocha": "^2.3.4"
+    },
+    "dependencies": {
+	"byline": "^4.2.1",
+	"suspend": "^0.7.0",
+	"temp": "^0.8.3"
+    }
 }
