@@ -22,31 +22,31 @@ clazz.findAll = function(res, impred, cb) {
     var frames = 0;
 
     function handleEvents(em) {
-	em.on('solution', function(sol) {
-	    results.push(sol);
-	});
-	em.on('done', function() {
-	    if(frames === 0 && !sawError) {
-		cb(undefined, results);
-	    } else {
-		frames -= 1;
-	    }
-	});
-	em.on('error', function(err) {
-	    cb(err);
-	    sawError = true;
-	});
-	em.on('continuation', function(task, cont) {
-	    frames += 1;
-	    function contAndHandle(err, value) {
-		handleEvents(cont(err, value));
-	    }
-	    try {
-		task.meaning()(self, contAndHandle);
-	    } catch(e) {
-		cb(e);
-	    }
-	});
+        em.on('solution', function(sol) {
+            results.push(sol);
+        });
+        em.on('done', function() {
+            if(frames === 0 && !sawError) {
+                cb(undefined, results);
+            } else {
+                frames -= 1;
+            }
+        });
+        em.on('error', function(err) {
+            cb(err);
+            sawError = true;
+        });
+        em.on('continuation', function(task, cont) {
+            frames += 1;
+            function contAndHandle(err, value) {
+                handleEvents(cont(err, value));
+            }
+            try {
+                task.meaning()(self, contAndHandle);
+            } catch(e) {
+                cb(e);
+            }
+        });
     }
 
     var em = this.ced.eval(res, impred);

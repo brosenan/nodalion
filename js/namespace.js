@@ -12,9 +12,9 @@ var clazz = module.exports.prototype;
 clazz._define = function(names) {
     var self = this;
     names.forEach(function(name) {
-	self[name] = function() {
-	    return new cedParser.Term(self.ns + "#" + name, Array.prototype.slice.call(arguments));
-	};
+        self[name] = function() {
+            return new cedParser.Term(self.ns + "#" + name, Array.prototype.slice.call(arguments));
+        };
     });
 };
 
