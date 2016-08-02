@@ -14,7 +14,7 @@ exports.toList = function(array) {
     return list;
 }
 
-ns._register('exec', (cmd, cwd) => cb => { 
+ns._register('exec', (cmd, cwd) => (nodalion, cb) => { 
     assert.equal(cmd.name, '.');
     child_process.execFile(cmd.args[0], cmd.args[1].meaning(), {cwd: cwd}, (err, stdout, stderr) => {
         if(err) {

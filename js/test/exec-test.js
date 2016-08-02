@@ -8,7 +8,7 @@ var ns = nodalion.namespace('/nodalion', ['exec', 'testCalculate']);
 var exec = require('../exec');
 
 var doTask = function(term, cb) {
-    term.meaning()(cb);
+    term.meaning()(undefined, cb);
 };
 
 describe("exec", function() {
