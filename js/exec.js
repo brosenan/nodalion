@@ -14,12 +14,12 @@ exports.toList = function(array) {
     return list;
 }
 
-ns._register('exec', list => cb => { 
-    assert.equal(list.name, '.');
-    child_process.execFile(list.args[0], list.args[1], (err, stdout, stderr) => {
+ns._register('exec', (cmd, cwd) => cb => { 
+    assert.equal(cmd.name, '.');
+    child_process.execFile(cmd.args[0], cmd.args[1].meaning(), {cwd: cwd}, (err, stdout, stderr) => {
         if(err) {
             return cb(err);
         }
         cb(undefined, exports.toList(stdout.split('\n')));
-    })
+    });
 });
