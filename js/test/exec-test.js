@@ -4,7 +4,7 @@ var assert = require("assert");
 var $S = require('suspend'), $R = $S.resume, $T = function(gen) { return function(done) { $S.run(gen, done); } };
 
 var nodalion = require('../nodalion');
-var ns = nodalion.namespace('/nodalion', ['exec']);
+var ns = nodalion.namespace('/nodalion', ['exec', 'testCalculate']);
 var exec = require('../exec');
 
 var doTask = function(term, cb) {
@@ -24,4 +24,15 @@ describe("exec", function() {
         assert(Array.isArray(lines), "exec must return an array");
         assert(lines.indexOf('exec-test.js') != -1, 'result should contain exec-test.js');
     }))
+    describe('integration', () => {
+        var n;
+        before(() => {
+            n = new nodalion(nodalion.__dirname + '/nodalion.cedimg', '/tmp/exec-ced.log');
+        })
+        it('should run from Cedalion', $T(function *() {
+            var X = {var:'X'};
+            var res = yield n.findAll(X, ns.testCalculate('1+2', X), $R());
+            assert.deepEqual(res, [3]);
+        }));
+    })
 });
