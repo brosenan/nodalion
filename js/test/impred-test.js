@@ -5,7 +5,7 @@ var temp = require('temp');
 var $S = require('suspend'), $R = $S.resume, $T = function(gen) { return function(done) { $S.run(gen, done); } };
 
 var Nodalion = require('../nodalion.js');
-var ns = Nodalion.namespace('/impred', ['testLocalStore', 'localStr', 'testNow', 'testUUID', 'testLocalQueue', 'testBase64Encode', 'testBase64Decode', 'testLoadNamespace']);
+var ns = Nodalion.namespace('/impred', ['testLocalStore', 'localStr', 'testNow', 'testUUID', 'testLocalQueue', 'testBase64Encode', 'testBase64Decode', 'testLoadNamespace', 'testLoadFile']);
 
 var nodalion = new Nodalion(__dirname + '/../../prolog/cedalion.pl', '/tmp/impred-ced.log');
 
@@ -80,13 +80,13 @@ describe('impred', function(){
             var X = {var:'X'};
             var content = "'/impred#foo'(1):-'builtin#true'. '/impred#foo'(2):-'builtin#true'. '/impred#foo'(3):-'builtin#true'.";
             var file = yield temp.open({prefix: 'ced', suffix: '.pl'}, $R());
-            fs.write(file.fd, content);
+            yield fs.write(file.fd, content, $R());
             var result = yield nodalion.findAll(X, ns.testLoadNamespace(file.path, X), $R());
             assert.deepEqual(result, [1, 2, 3]);
         }));
         it.skip('should load containers when needed', function(done){
             this.timeout(7000);
-            $S.async(function*() {
+            $S.callback(function*() {
                 var hash = "QmdHZHRfuJ2QBXfvaMr3ksh3gKyoxc15LhRhKgEKrf4wnj";
                 var X = {var:'X'};
                 var nns = Nodalion.namespace('/nodalion', ['testContainer']);
@@ -95,4 +95,17 @@ describe('impred', function(){
             })(done);
         });
     });
+    describe('loadSourceFile(FileName, Prep, PrepIn, PrepOut)', () => {
+        it('should load a cedalion source file on top of an image', $T(function*() {
+            var X = {var:'X'};
+            var imageContent = "'/impred#foo'(1):-'builtin#true'.";
+            var imageFile = yield temp.open({prefix: 'ced', suffix: '.pl'}, $R());
+            yield fs.write(imageFile.fd, imageContent, $R());
+            var exampleContent = "foo(2):-builtin:true.";
+            var exampleFile = yield temp.open({prefix: 'example', suffix: '.ced'}, $R());
+            yield fs.write(exampleFile.fd, exampleContent, $R());
+            var result = yield nodalion.findAll(X, ns.testLoadFile(imageFile.path, exampleFile.path, '/impred', X), $R());
+            assert.deepEqual(result, [1, 2]);
+        }))
+    })
 });
