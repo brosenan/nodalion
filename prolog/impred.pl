@@ -99,6 +99,10 @@ handleTask('/impred#loadCedalionImage'(!FileName, Prep, In, Out), _) :-
     open(FileName, read, Stream),
     read(Stream, Clause),
     loadCedalionImage(Clause, Stream, Prep, In, Out).
+handleTask('/impred#loadCedalionSource'(!FileName, !NS, Prep, In, Out), _) :-
+    open(FileName, read, Stream),
+    read(Stream, Clause),
+    loadCedalionSource(Clause, Stream, NS, Prep, In, Out).
 
 loadCedalionImage(end_of_file, _, _, _, _) :- !.
 loadCedalionImage(Clause, Stream, Prep, In, Out) :-
@@ -108,3 +112,11 @@ loadCedalionImage(Clause, Stream, Prep, In, Out) :-
     read(Stream, Clause2),
     loadCedalionImage(Clause2, Stream, Prep, In, Out).
 
+loadCedalionSource(end_of_file, _, _, _, _, _) :- !.
+loadCedalionSource(Local, Stream, NS, Prep, In, Out) :-
+    localToGlobal(Local, [default=NS], Global),
+    copy_term([Prep, In, Out], [Prep1, Global, GlobalPrepped]),
+    Prep1,
+    assert(GlobalPrepped),
+    read(Stream, Local2),
+    loadCedalionSource(Local2, Stream, NS,Prep, In, Out).
