@@ -6,4 +6,4 @@ foo(4):-builtin:true.
 clause(loadImageToContainer(ImgFile,Container),task(loadCedalionImage(ImgFile,'/containers':containerize(In::'/bootstrap':statement,Out::'/bootstrap':statement,Container),In,Out),_,'/nodalion':voidType)).
 annotation:shrink(clause(testLoadNamespace(File,X),conj(loadImageToContainer(File,!foobar),conj(pred('/containers':containerize(foo(X)::'/bootstrap':pred,Goal::'/bootstrap':pred,!foobar)),pred((Goal,\+foo(X))))))).
 '/bootstrap':signature(testLoadFile(ImagePath,SourcePath,SourceNS,X)::impred,[ImagePath::'/bootstrap':string,SourcePath::'/bootstrap':string,SourceNS::'/bootstrap':string,X::'/bootstrap':number]).
-annotation:shrink(clause(testLoadFile(ImagePath,SourcePath,SourceNS,X),conj(loadImageToContainer(ImagePath,!mycontainer),conj(pred('/containers':containerize(foo(X)::'/bootstrap':pred,Goal::'/bootstrap':pred,!foobar)),pred(Goal))))).
+annotation:shrink(clause(testLoadFile(ImagePath,SourcePath,SourceNS,X),conj(loadImageToContainer(ImagePath,!mycontainer),conj(pred('/containers':containerize(foo(X)::'/bootstrap':pred,Goal::'/bootstrap':pred,!mycontainer)),pred(Goal))))).
