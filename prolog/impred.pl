@@ -107,7 +107,10 @@ handleTask('/impred#readSourceFile'(!FileName, !NS), Content) :-
     open(FileName, read, Stream),
     read_term(Stream, Statement, [variable_names(VarNames)]),
     readSourceFile(Statement, VarNames, FileName, Stream, NS, Content).
-
+handleTask('/impred#assert'(Statement), _) :-
+    assert(Statement).
+handleTask('/impred#retract'(Statement), _) :-
+    retract(Statement).
 
 
 loadCedalionImage(end_of_file, _, _, _, _) :- !.

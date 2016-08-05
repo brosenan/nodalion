@@ -8,7 +8,7 @@ var Nodalion = require('../nodalion.js');
 var ns = Nodalion.namespace('/impred', ['testLocalStore', 'localStr', 'testNow', 'testUUID', 'testLocalQueue', 
                                         'testBase64Encode', 'testBase64Decode', 'testLoadNamespace', 
                                         'testLoadFile', 'testLoadFile2',
-                                        'readSourceFile', 'task']);
+                                        'readSourceFile', 'task', 'assert', 'pred', 'retract']);
 
 var nodalion = new Nodalion(__dirname + '/../../prolog/cedalion.pl', '/tmp/impred-ced.log');
 
@@ -119,6 +119,34 @@ describe('impred', function(){
             var varNames = res.args[2].meaning();
             assert.equal(varNames.length, 1);
             assert.equal(varNames[0].args[1], 'World');
+        }));
+    });
+    describe('assert(Statement)', () => {
+        it('should add the statement to the logic  program', $T(function*() {
+            // Add /foo:bar(3):-builtin:true to the program 
+            var builtin = Nodalion.namespace('builtin', ['true']);
+            var foo = Nodalion.namespace('/foo', ['bar']);
+            var statement = {name: ":-", args: [foo.bar(3), builtin.true()]};
+            yield nodalion.findAll({var: '_'}, ns.task(ns.assert(statement), {var: '_X'}, {var: '_T'}), $R());
+            // Query /foo:bar(X)
+            var X = {var:'X'};
+            var res = yield nodalion.findAll(X, ns.pred(foo.bar(X)), $R());
+            assert.deepEqual(res, [3]);
+        }));
+    });
+    describe('retract(Statement)', () => {
+        it('should remove the statement from the logic  program', $T(function*() {
+            // Add /foo2:bar(4):-builtin:true and /foo2:bar(5):-builtin:true to the program 
+            var builtin = Nodalion.namespace('builtin', ['true']);
+            var foo = Nodalion.namespace('/foo2', ['bar']);
+            yield nodalion.findAll({var: '_'}, ns.task(ns.assert({name: ":-", args: [foo.bar(4), builtin.true()]}), {var: '_X'}, {var: '_T'}), $R());
+            yield nodalion.findAll({var: '_'}, ns.task(ns.assert({name: ":-", args: [foo.bar(5), builtin.true()]}), {var: '_X'}, {var: '_T'}), $R());
+            // Remove /foo2:bar(4):-builtin:true
+            yield nodalion.findAll({var: '_'}, ns.task(ns.retract({name: ":-", args: [foo.bar(4), builtin.true()]}), {var: '_X'}, {var: '_T'}), $R());
+            // Query /foo:bar(X)
+            var X = {var:'X'};
+            var res = yield nodalion.findAll(X, ns.pred(foo.bar(X)), $R());
+            assert.deepEqual(res, [5]);
         }));
     });
     describe.skip('loadSourceFile(FileName, Prep, PrepIn, PrepOut)', () => {
