@@ -99,10 +99,6 @@ handleTask('/impred#loadCedalionImage'(!FileName, Prep, In, Out), _) :-
     open(FileName, read, Stream),
     read(Stream, Clause),
     loadCedalionImage(Clause, Stream, Prep, In, Out).
-handleTask('/impred#loadCedalionSource'(!FileName, !NS, Prep, In, Out), _) :-
-    open(FileName, read, Stream),
-    read_term(Stream, Clause, [variable_names(VarNames)]),
-    loadCedalionSource(Clause, Stream, FileName, NS, VarNames, Prep, In, Out).
 handleTask('/impred#readSourceFile'(!FileName, !NS), Content) :-
     open(FileName, read, Stream),
     read_term(Stream, Statement, [variable_names(VarNames)]),
@@ -120,19 +116,6 @@ loadCedalionImage(Clause, Stream, Prep, In, Out) :-
     assert(Out1),
     read(Stream, Clause2),
     loadCedalionImage(Clause2, Stream, Prep, In, Out).
-
-loadCedalionSource(end_of_file, _, _, _, _, _, _, _) :- !.
-loadCedalionSource(Local, Stream, FileName, NS, VarNames, Prep, In, Out) :-
-    localToGlobal(Local, [default=NS], Global),
-    copy_term([Prep, In, Out], [Prep1, Global, GlobalPrepped]),
-    convertVarNames(VarNames, VNs),
-    copy_term([Prep, In, Out], [Prep2, 'builtin#loadedStatement'(FileName, Global, VNs), LoadedStatement]),
-    Prep1,
-    Prep2,
-    assert(GlobalPrepped),
-    assert(LoadedStatement),
-    read_term(Stream, Local2, [variable_names(VarNames2)]),
-    loadCedalionSource(Local2, Stream, FileName, NS, VarNames2, Prep, In, Out).
 
 readSourceFile(end_of_file, _, _, _, _, []) :- !.
 readSourceFile(Statement, VarNames, FileName, Stream, NS, ['builtin#loadedStatement'(!FileName, GlobalStatement, VNs) | Content]) :-
