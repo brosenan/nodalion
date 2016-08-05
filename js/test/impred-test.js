@@ -152,24 +152,16 @@ describe('impred', function(){
     describe('loadSourceFile(FileName, Prep, PrepIn, PrepOut)', () => {
         it('should load a cedalion source file on top of an image', $T(function*() {
             var X = {var:'X'};
-            var imageContent = "'/impred#foo'(4):-'builtin#true'.";
-            var imageFile = yield temp.open({prefix: 'ced', suffix: '.pl'}, $R());
-            yield fs.write(imageFile.fd, imageContent, $R());
-            var exampleContent = "foo(5):-builtin:true.";
-            var exampleFile = yield temp.open({prefix: 'example', suffix: '.ced'}, $R());
-            yield fs.write(exampleFile.fd, exampleContent, $R());
-            var result = yield nodalion.findAll(X, ns.testLoadFile(imageFile.path, exampleFile.path, '/impred', X), $R());
+            var imageFileName = yield writeFile("'/impred#foo'(4):-'builtin#true'.", $R());
+            var exampleFileName = yield writeFile("foo(5):-builtin:true.", $R());
+            var result = yield nodalion.findAll(X, ns.testLoadFile(imageFileName, exampleFileName, '/impred', X), $R());
             assert.deepEqual(result, [4, 5]);
         }))
         it('should support the loadedStatement() predicate', $T(function*() {
             var X = {var:'X'};
-            var imageContent = "'/impred#foo'(6):-'builtin#true'.";
-            var imageFile = yield temp.open({prefix: 'ced', suffix: '.pl'}, $R());
-            yield fs.write(imageFile.fd, imageContent, $R());
-            var exampleContent = "foo(7):-builtin:true.";
-            var exampleFile = yield temp.open({prefix: 'example', suffix: '.ced'}, $R());
-            yield fs.write(exampleFile.fd, exampleContent, $R());
-            var result = yield nodalion.findAll(X, ns.testLoadFile2(imageFile.path, exampleFile.path, '/impred', X), $R());
+            var imageFileName = yield writeFile("", $R());
+            var exampleFileName = yield writeFile("foo(7):-builtin:true.", $R());
+            var result = yield nodalion.findAll(X, ns.testLoadFile2(imageFileName, exampleFileName, '/impred', X), $R());
             assert.deepEqual(result, [7]);
         }))
     })
