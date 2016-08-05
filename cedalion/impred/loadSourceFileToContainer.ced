@@ -13,4 +13,4 @@ annotation:shrink(clause(removeSourceFileFromContainer(FileName,Container),conj(
 '/bootstrap':signature(retractStatements(Loaded)::impred,[Loaded::'/bootstrap':list('/bootstrap':pred)]).
 clause(retractStatements([]),true).
 '/bootstrap':signature(retract(Statement)::task('/nodalion':voidType),[Statement::'/bootstrap':statement]).
-annotation:shrink(clause(retractStatements(['/containers':loadedStatement(FileName,Container,Statement,VNs)|Loaded]),conj(task(retract(Statement),_,'/nodalion':voidType),task(retract(('/containers':loadedStatement(FileName,Container,Statement,VNs):-builtin:true)),_,'/nodalion':voidType)))).
+annotation:shrink(clause(retractStatements(['/containers':loadedStatement(FileName,Container,Statement,VNs)|Loaded]),conj(task(retract(Statement),_,'/nodalion':voidType),conj(task(retract(('/containers':loadedStatement(FileName,Container,Statement,VNs):-builtin:true)),_,'/nodalion':voidType),retractStatements(Loaded))))).
