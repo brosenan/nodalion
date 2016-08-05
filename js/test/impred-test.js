@@ -5,7 +5,9 @@ var temp = require('temp');
 var $S = require('suspend'), $R = $S.resume, $T = function(gen) { return function(done) { $S.run(gen, done); } };
 
 var Nodalion = require('../nodalion.js');
-var ns = Nodalion.namespace('/impred', ['testLocalStore', 'localStr', 'testNow', 'testUUID', 'testLocalQueue', 'testBase64Encode', 'testBase64Decode', 'testLoadNamespace', 'testLoadFile']);
+var ns = Nodalion.namespace('/impred', ['testLocalStore', 'localStr', 'testNow', 'testUUID', 'testLocalQueue', 
+                                        'testBase64Encode', 'testBase64Decode', 'testLoadNamespace', 
+                                        'testLoadFile', 'testLoadFile2']);
 
 var nodalion = new Nodalion(__dirname + '/../../prolog/cedalion.pl', '/tmp/impred-ced.log');
 
@@ -105,6 +107,17 @@ describe('impred', function(){
             var exampleFile = yield temp.open({prefix: 'example', suffix: '.ced'}, $R());
             yield fs.write(exampleFile.fd, exampleContent, $R());
             var result = yield nodalion.findAll(X, ns.testLoadFile(imageFile.path, exampleFile.path, '/impred', X), $R());
+            assert.deepEqual(result, [4, 5]);
+        }))
+        it('should support the loadedStatement() predicate', $T(function*() {
+            var X = {var:'X'};
+            var imageContent = "'/impred#foo'(6):-'builtin#true'.";
+            var imageFile = yield temp.open({prefix: 'ced', suffix: '.pl'}, $R());
+            yield fs.write(imageFile.fd, imageContent, $R());
+            var exampleContent = "foo(7):-builtin:true.";
+            var exampleFile = yield temp.open({prefix: 'example', suffix: '.ced'}, $R());
+            yield fs.write(exampleFile.fd, exampleContent, $R());
+            var result = yield nodalion.findAll(X, ns.testLoadFile2(imageFile.path, exampleFile.path, '/impred', X), $R());
             assert.deepEqual(result, [4, 5]);
         }))
     })
