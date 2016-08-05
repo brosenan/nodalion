@@ -149,7 +149,7 @@ describe('impred', function(){
             assert.deepEqual(res, [5]);
         }));
     });
-    describe.skip('loadSourceFile(FileName, Prep, PrepIn, PrepOut)', () => {
+    describe('loadSourceFile(FileName, Prep, PrepIn, PrepOut)', () => {
         it('should load a cedalion source file on top of an image', $T(function*() {
             var X = {var:'X'};
             var imageContent = "'/impred#foo'(4):-'builtin#true'.";
@@ -170,7 +170,7 @@ describe('impred', function(){
             var exampleFile = yield temp.open({prefix: 'example', suffix: '.ced'}, $R());
             yield fs.write(exampleFile.fd, exampleContent, $R());
             var result = yield nodalion.findAll(X, ns.testLoadFile2(imageFile.path, exampleFile.path, '/impred', X), $R());
-            assert.deepEqual(result, [4, 5]);
+            assert.deepEqual(result, [7]);
         }))
     })
 });
