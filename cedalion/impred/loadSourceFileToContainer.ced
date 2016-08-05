@@ -8,3 +8,9 @@ clause(assertStatementsInContainer([],_),true).
 annotation:shrink(clause(assertStatementsInContainer([builtin:loadedStatement(FileName,Statement,VNs)|Statements],Container),conj(assertContainerized(Statement,Container),conj(assertContainerized((builtin:loadedStatement(FileName,Statement,VNs):-builtin:true),Container),assertStatementsInContainer(Statements,Container))))).
 '/bootstrap':signature(assertContainerized(Statement,Container)::impred,[Statement::'/bootstrap':statement,Container::'/bootstrap':string]).
 annotation:shrink(clause(assertContainerized(Statement,Container),conj(pred('/containers':containerize(Statement::'/bootstrap':statement,StatementPrime::'/bootstrap':statement,Container)),task(assert(StatementPrime),_,'/nodalion':voidType)))).
+'/bootstrap':signature(removeSourceFileFromContainer(FileName,Container)::impred,[FileName::'/bootstrap':string,Container::'/bootstrap':string]).
+annotation:shrink(clause(removeSourceFileFromContainer(FileName,Container),conj(pred(builtin:findall('/containers':loadedStatement(FileName,Container,Statement,VNs),'/bootstrap':pred,'/containers':loadedStatement(FileName,Container,Statement,VNs),Loaded)),retractStatements(Loaded)))).
+'/bootstrap':signature(retractStatements(Loaded)::impred,[Loaded::'/bootstrap':list('/bootstrap':pred)]).
+clause(retractStatements([]),true).
+'/bootstrap':signature(retract(Statement)::task('/nodalion':voidType),[Statement::'/bootstrap':statement]).
+annotation:shrink(clause(retractStatements(['/containers':loadedStatement(FileName,Container,Statement,VNs)|Loaded]),conj(task(retract(Statement),_,'/nodalion':voidType),task(retract(('/containers':loadedStatement(FileName,Container,Statement,VNs):-builtin:true)),_,'/nodalion':voidType)))).
