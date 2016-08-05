@@ -7,7 +7,8 @@ var $S = require('suspend'), $R = $S.resume, $T = function(gen) { return functio
 var Nodalion = require('../nodalion.js');
 var ns = Nodalion.namespace('/impred', ['testLocalStore', 'localStr', 'testNow', 'testUUID', 'testLocalQueue', 
                                         'testBase64Encode', 'testBase64Decode', 'testLoadNamespace', 
-                                        'testLoadFile', 'testLoadFile2']);
+                                        'testLoadFile', 'testLoadFile2',
+                                        'readSourceFile', 'task']);
 
 var nodalion = new Nodalion(__dirname + '/../../prolog/cedalion.pl', '/tmp/impred-ced.log');
 
@@ -97,7 +98,30 @@ describe('impred', function(){
             })(done);
         });
     });
-    describe('loadSourceFile(FileName, Prep, PrepIn, PrepOut)', () => {
+    var writeFile = $S.callback(function*(content) {
+            var file = yield temp.open({prefix: 'example', suffix: '.ced'}, $R());
+            yield fs.write(file.fd, content, $R());
+            return file.path;
+    });
+    describe('readSourceFile(FileName, NS)', () => {
+        it('should return a list of the statements in a file', $T(function*() {
+            var fileName = yield writeFile("hello(World).", $R());
+            var X = {var:'X'};
+            var res = yield nodalion.findAll(X, ns.task(ns.readSourceFile(fileName, '/foo'), X, {var:'T'}), $R());
+            assert.equal(res.length, 1); // One result
+            res = res[0].meaning();
+            assert.equal(res.length, 1); // One statement
+            res = res[0];
+            assert.equal(res.name, 'builtin#loadedStatement');
+            assert.equal(res.args.length, 3);
+            assert.equal(res.args[0], fileName);
+            assert.equal(res.args[1].name, '/foo#hello');
+            var varNames = res.args[2].meaning();
+            assert.equal(varNames.length, 1);
+            assert.equal(varNames[0].args[1], 'World');
+        }));
+    });
+    describe.skip('loadSourceFile(FileName, Prep, PrepIn, PrepOut)', () => {
         it('should load a cedalion source file on top of an image', $T(function*() {
             var X = {var:'X'};
             var imageContent = "'/impred#foo'(4):-'builtin#true'.";
