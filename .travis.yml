@@ -1,12 +1,16 @@
 language: node_js
 node_js:
-  - "6"
-  - "6.1"
-  - "5.11"
-
+- '6'
+- '6.1'
+- '5.11'
 dist: trusty
-
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y swi-prolog
-  
+- sudo apt-get -qq update
+- sudo apt-get install -y swi-prolog
+deploy:
+  provider: npm
+  email: brosenan@gmail.com
+  api_key:
+    secure: U4Y2//ucaI+ywVAHrJeSTbcDGQMnpfhlXITeKv610eyYEOqw4XpSg6qLZ5t6cAk+36C5G3XqN3c7G56O0wcZsHwYP/UbNy9rwnoDmv+BlodK0hdQrDAgxAhKIo2KNiukxcf8BvEuQbni+4u55gZliMKhZck/4LlJ2l1fxjTSxi4AF6wEmQVvERZ/15E2x7BPEdYsabnjOaZiDD9dmuBGNNTXodB3Kw1jg+qmYywp15HMsStPryKqkw7dVfHu6s4Tx8fFf1ynQhOk6Z034FTPTZjxj5gM7wMoLCS5G80JZ/l9jQmjf31OHSx9kmwLALhMLgJIprgkgo6rHsxJBIh+s0PK4SJIX++moCwhn7K6RM8cb01edzRtrpGH4jQZ3qxLMftw5UmCuDEf91dnDM7xC7IEWom+5j0+E824Ic8+JL3ohbLXISL8KjYyQxa689AXtzC9NaZqt2uLrpq+Bo7Xx+iIyjOza51yPLEtBBxuBEEtn0RMBPmfFvgbMzeMgxiIgPiQ2Pwt12+iD1MlXUMZDzk229kRXjcZ7OlKIlk1coLgTjStu6pnPe5ZyBH+BNbVKSU6c5yPMljdAjodPvCq+bhcWDQkazowG5pDyKRywzROBnRdT0wR7I/sNn6jr7aDx1qegVJfwexY3f49ve5hTu4sN6mJth9B0cjidDpZ/Zo=
+  on:
+    tags: true
