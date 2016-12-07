@@ -14,3 +14,4 @@ assertSimulate(P,Q):-annotation:shrink('/bootstrap':forall(annotation:parenthese
 '/bootstrap':signature(appendNeededAction(Pred,Path,VNs)::'/bootstrap':procedure,[Pred::'/bootstrap':pred,Path::cpi:path,VNs::'/bootstrap':list('/bootstrap':varName)]).
 cpi:procedureCommand(appendNeededAction(assertSimulate(P,Q),Path,VNs),'/bootstrap':doProc(cpi:edit(Path,assertSimulate(Fixed,Q)::'/bootstrap':pred,VNs))):-builtin:catch((assertSimulate(P,Q),builtin:fail),simulationException(PPrime,_,Task,Ans,T),builtin:if(PPrime::state=empty::state,Fixed::state=seq(P,trans(Task,Ans,T))::state,Fixed::state=seq(trans(Task,Ans,T),P)::state)).
 '/bootstrap':contextMenuEntry(assertSimulate(P,Q)::'/bootstrap':pred,VNs,Path,!'Fix model',appendNeededAction(assertSimulate(P,Q),Path,VNs)).
+'/bootstrap':contextMenuEntry(assertSimulate(P,Q)::'/bootstrap':pred,VNs,Path,!'Swap',cpi:edit(Path,assertSimulate(Q,P)::'/bootstrap':pred,VNs)).
