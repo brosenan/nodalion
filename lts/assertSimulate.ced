@@ -1,5 +1,5 @@
 '/bootstrap':signature(assertSimulate(P,Q)::'/bootstrap':pred,[P::state,Q::state]).
-'/bootstrap':projection(assertSimulate(P,Q)::'/bootstrap':pred,'/bootstrap':horiz(['/bootstrap':vis(P::state),'/bootstrap':color('/bootstrap':symbol(8831),cpi:rgb(255,128,0)),'/bootstrap':vis(Q::state)],cpi:middle)).
+'/bootstrap':projection(assertSimulate(P,Q)::'/bootstrap':pred,'/bootstrap':horiz(['/bootstrap':vis(P::state),'/bootstrap':color('/bootstrap':symbol(8831),cpi:rgb(255,128,0)),'/bootstrap':vis(Q::state)])).
 '/bootstrap':alias(assertSimulate(P,Q)::'/bootstrap':pred,!'>~!').
 '/util':behavior(assertSimulate(P,Q)::'/bootstrap':pred,!'should succeed when all moves in Q exist in P',assertSimulate(alt(trans('/impred':now,1,'/bootstrap':number),trans('/impred':now,2,'/bootstrap':number)),trans('/impred':now,1,'/bootstrap':number))).
 '/bootstrap':defAtom(exceptionWasNotThrown::'/bootstrap':exception).
@@ -11,3 +11,6 @@
 assertSimulate(P,Q):-annotation:shrink('/bootstrap':forall(annotation:parentheses(transition(Q,Task,Ans,T,QPrime)),builtin:if(transition(P,Task,Ans,T,PPrime),assertSimulate(PPrime,QPrime),builtin:throw(simulationException(P,Q,Task,Ans,T))))).
 '/bootstrap':contextMenuEntry(simulates(P,Q)::'/bootstrap':pred,VNs,Path,!'Convert to assertion',cpi:edit(Path,assertSimulate(P,Q)::'/bootstrap':pred,VNs)).
 '/bootstrap':contextMenuEntry(assertSimulate(P,Q)::'/bootstrap':pred,VNs,Path,!'Convert to predicate',cpi:edit(Path,simulates(P,Q)::'/bootstrap':pred,VNs)).
+'/bootstrap':signature(appendNeededAction(Pred,Path,VNs)::'/bootstrap':procedure,[Pred::'/bootstrap':pred,Path::cpi:path,VNs::'/bootstrap':list('/bootstrap':varName)]).
+cpi:procedureCommand(appendNeededAction(assertSimulate(P,Q),Path,VNs),'/bootstrap':doProc(cpi:edit(Path,assertSimulate(Fixed,Q)::'/bootstrap':pred,VNs))):-builtin:catch((assertSimulate(P,Q),builtin:fail),simulationException(PPrime,_,Task,Ans,T),builtin:if(PPrime::state=empty::state,Fixed::state=seq(P,trans(Task,Ans,T))::state,Fixed::state=seq(trans(Task,Ans,T),P)::state)).
+'/bootstrap':contextMenuEntry(assertSimulate(P,Q)::'/bootstrap':pred,VNs,Path,!'Fix model',appendNeededAction(assertSimulate(P,Q),Path,VNs)).

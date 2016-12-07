@@ -1,0 +1,4 @@
+'/bootstrap':signature(taskListToLTS(List,Model)::'/bootstrap':pred,[List::'/bootstrap':list('/impred':impred),Model::state]).
+taskListToLTS([],empty):-builtin:true.
+taskListToLTS(['/impred':task(Task,Ans,T)|Rest],seq(trans(Task,Ans,T),RestPrime)):-taskListToLTS(Rest,RestPrime).
+'/bootstrap':contextMenuEntry('/impred':simulate(Impred,List,'/impred':true)::'/bootstrap':pred,VNs,Path,!'Convert to simulation assertion','/bootstrap':where('/bootstrap':doProc(cpi:edit(Path,assertSimulate(Model,impred(Impred))::'/bootstrap':pred,VNs)),taskListToLTS(List,Model))).
