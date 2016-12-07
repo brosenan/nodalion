@@ -8,7 +8,7 @@
 '/impred':clause(applyWork(W,T,W,Impred),Impred).
 '/bootstrap':signature(enqueueJob(Impred)::'/impred':impred,[Impred::'/impred':impred]).
 '/bootstrap':projection(enqueueJob(Impred)::'/impred':impred,'/bootstrap':horiz(['/bootstrap':label(!enqueue),'/bootstrap':vis(Impred::'/impred':impred)])).
-'/util':behavior(enqueueJob(Impred)::'/impred':impred,!'should enqueue Impred in the work queue','/impred':simulate(enqueueJob('/impred':true),['/impred':task(enqueue(!wq,'/impred':true,'/impred':impred),_,voidType)],'/impred':true)).
+'/util':behavior(enqueueJob(Impred)::'/impred':impred,!'should enqueue Impred in the work queue',annotation:shrink('/lts':assertSimulate('/lts':trans(enqueue(!wq,'/impred':true,'/impred':impred),_,voidType),'/lts':impred(enqueueJob('/impred':true))))).
 '/bootstrap':signature(enqueue(Queue,Job,Type)::'/impred':task(voidType),[Queue::'/bootstrap':string,Job::Type,Type::'/bootstrap':type]).
 '/impred':clause(enqueueJob(Impred),'/impred':task(enqueue(!wq,Impred,'/impred':impred),_,voidType)).
 '/bootstrap':defAtom(defaultQueueDomain::queueDomain).
