@@ -1,0 +1,16 @@
+'/bootstrap':defAtom(state::'/bootstrap':type).
+'/bootstrap':signature(trans(Q,A,T)::state,[Q::'/impred':task(T),A::T,T::'/bootstrap':type]).
+'/bootstrap':projection(trans(Q,A,T)::state,'/bootstrap':horiz(['/bootstrap':vis(Q::'/impred':task(T)),'/bootstrap':symbol(8594),'/bootstrap':vis(A::T),'/bootstrap':label(! (::)),'/bootstrap':vis(T::'/bootstrap':type)])).
+'/bootstrap':adapter(Q::'/impred':task(T),trans(Q,A,T)::state).
+'/bootstrap':alias(trans(Q,A,T)::state,! (->)).
+'/bootstrap':defAtom(empty::state).
+'/bootstrap':projection(empty::state,'/bootstrap':symbol(949)).
+'/bootstrap':signature(transition(S1,Q,A,T,S2)::'/bootstrap':pred,[S1::state,Q::'/impred':task(T),A::T,T::'/bootstrap':type,S2::state]).
+'/bootstrap':projection(transition(S1,Q,A,T,S2)::'/bootstrap':pred,'/bootstrap':horiz(['/bootstrap':vis(S1::state),'/bootstrap':symbol(8658),'/bootstrap':vis(S2::state),'/bootstrap':brackets('/bootstrap':horiz(['/bootstrap':vis(Q::'/impred':task(T)),'/bootstrap':symbol(8594),'/bootstrap':vis(A::T),'/bootstrap':label(! (::)),'/bootstrap':vis(T::'/bootstrap':type)]),91,93)])).
+'/bootstrap':alias(transition(S1,Q,A,T,S2)::'/bootstrap':pred,!'=>').
+'/util':behavior(trans(Q,A,T)::state,!'should have a transition to empty', (transition(trans(Q,A,T),QPrime,APrime,T,Empty),'/util':assertEqual(QPrime,Q,'/impred':task(T)),'/util':assertEqual(APrime,A,T),'/util':assertEqual(Empty,empty,state))).
+'/util':behavior(trans(Q,A,T)::state,!'should not terminate',\+terminates(trans(_,_,_))).
+transition(trans(Q,A,T),Q,A,T,empty):-builtin:true.
+'/bootstrap':signature(terminates(S)::'/bootstrap':pred,[S::state]).
+'/util':behavior(empty::state,!'should terminate',terminates(empty)).
+terminates(empty):-builtin:true.
