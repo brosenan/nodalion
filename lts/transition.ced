@@ -14,3 +14,7 @@ annotation:changeMode((transition(trans(Q,A,T),Q,A,T,empty):-builtin:true),sem).
 '/bootstrap':signature(terminates(S)::'/bootstrap':pred,[S::state]).
 '/util':behavior(empty::state,!'should terminate',terminates(empty)).
 annotation:changeMode((terminates(empty):-builtin:true),sem).
+'/bootstrap':signature(def(A,B)::'/bootstrap':statement,[A::state,B::state]).
+'/bootstrap':projection(def(A,B)::'/bootstrap':statement,'/bootstrap':horiz(['/bootstrap':vis(A::state),'/bootstrap':label(!':='),'/bootstrap':vis(B::state)])).
+def(A,B)~>terminates(A):-terminates(B).
+def(A,B)~>transition(A,Q,Ans,T,X):-transition(B,Q,Ans,T,X).
