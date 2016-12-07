@@ -12,6 +12,7 @@
 '/util':behavior(trans(Q,A,T)::state,!'should not terminate',\+terminates(trans(_,_,_))).
 annotation:changeMode((transition(trans(Q,A,T),Q,A,T,empty):-builtin:true),sem).
 '/bootstrap':signature(terminates(S)::'/bootstrap':pred,[S::state]).
+'/bootstrap':projection(terminates(S)::'/bootstrap':pred,'/bootstrap':horiz(['/bootstrap':label(!accepting),'/bootstrap':brackets('/bootstrap':vis(S::state),40,41)])).
 '/util':behavior(empty::state,!'should terminate',terminates(empty)).
 annotation:changeMode((terminates(empty):-builtin:true),sem).
 '/bootstrap':signature(def(A,B)::'/bootstrap':statement,[A::state,B::state]).
