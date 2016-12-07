@@ -1,0 +1,8 @@
+'/bootstrap':signature(impred(Impred)::state,[Impred::'/impred':impred]).
+'/bootstrap':projection(impred(Impred)::state,'/bootstrap':lineBorder('/bootstrap':vis(Impred::'/impred':impred),2,cpi:rgb(255,128,255))).
+'/bootstrap':adapter(Impred::'/impred':impred,impred(Impred)::state).
+'/util':behavior(impred(Impred)::state,!'should provide a transition for each continuation', (transition(impred('/impred':conj('/impred':task(Task,Ans,T),'/impred':task(Task2,Ans2,T2))),TaskPrime,AnsPrime,T,S),'/util':assertEqual(TaskPrime,Task,'/impred':task(T)),'/util':assertEqual(AnsPrime,Ans,T),'/util':assertEqual(S,impred('/impred':conj('/impred':true,'/impred':task(Task2,Ans2,T2))),state))).
+transition(impred(Impred),Task,Ans,T,impred(Cont)):-'/impred':solve(Impred,_,_,'/impred':continuation(Task,Ans,T,Cont,_)).
+'/util':behavior(impred(Impred)::state,!'should terminate on solutions', (terminates(impred('/impred':pred(X::'/bootstrap':number=3::'/bootstrap':number))),'/util':assertEqual(X,3,'/bootstrap':number))).
+'/util':behavior(impred(Impred)::state,!'should terminate on continuations',\+terminates(impred('/impred':task('/impred':now,_,'/bootstrap':number)))).
+terminates(impred(Impred)):-'/impred':solve(Impred,_,_,'/impred':solution(_)).
