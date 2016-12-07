@@ -1,0 +1,7 @@
+'/bootstrap':defAtom(sem::'/bootstrap':mode).
+'/bootstrap':projection((H:-B)::'/bootstrap':statement,sem,'/bootstrap':vert([cpi:vis(B::'/bootstrap':pred,sem),'/bootstrap':pivot('/bootstrap':box(1)),cpi:vis(H::'/bootstrap':pred,sem)])).
+'/bootstrap':sandbox(annotation:changeMode((transition(trans(Q,A,T),Q,A,T,empty):-transition(S1,Q1,A1,T,empty),transition(S2,Q2,A2,T,empty)),sem)::'/bootstrap':statement).
+'/bootstrap':projection((A,B)::'/bootstrap':pred,sem,'/bootstrap':horiz([cpi:vis(A::'/bootstrap':pred,sem),'/bootstrap':label(!'    '),cpi:vis(B::'/bootstrap':pred,sem)])).
+'/bootstrap':projection(builtin:true::'/bootstrap':pred,sem,'/bootstrap':label(!' ')).
+'/bootstrap':projection(builtin:true::'/bootstrap':pred,'/bootstrap':label(!true)).
+'/bootstrap':contextMenuEntry((H:-B)::'/bootstrap':statement,VNs,Path,!'Project as semantics',cpi:edit(Path,annotation:escape(annotation:changeMode((H:-B),sem))::'/bootstrap':statement,VNs)).

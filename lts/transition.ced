@@ -10,7 +10,7 @@
 '/bootstrap':alias(transition(S1,Q,A,T,S2)::'/bootstrap':pred,!'=>').
 '/util':behavior(trans(Q,A,T)::state,!'should have a transition to empty', (transition(trans(Q,A,T),QPrime,APrime,T,Empty),'/util':assertEqual(QPrime,Q,'/impred':task(T)),'/util':assertEqual(APrime,A,T),'/util':assertEqual(Empty,empty,state))).
 '/util':behavior(trans(Q,A,T)::state,!'should not terminate',\+terminates(trans(_,_,_))).
-transition(trans(Q,A,T),Q,A,T,empty):-builtin:true.
+annotation:changeMode((transition(trans(Q,A,T),Q,A,T,empty):-builtin:true),sem).
 '/bootstrap':signature(terminates(S)::'/bootstrap':pred,[S::state]).
 '/util':behavior(empty::state,!'should terminate',terminates(empty)).
-terminates(empty):-builtin:true.
+annotation:changeMode((terminates(empty):-builtin:true),sem).
