@@ -3,4 +3,4 @@
 '/bootstrap':alias(guarded(S1,G)::state,!'{}').
 '/util':behavior(guarded(S1,G)::state,!'should support transitions from S1 if G holds', (transition(guarded(trans('/impred':now,1,'/bootstrap':number),builtin:true),Now,One,'/bootstrap':number,Empty),'/util':assertEqual(Empty,empty,state),'/util':assertEqual(Now,'/impred':now,'/impred':task('/bootstrap':number)),'/util':assertEqual(One,1,'/bootstrap':number))).
 '/util':behavior(guarded(S1,G)::state,!'should not transition if G does not hold',\+transition(guarded(trans('/impred':now,1,'/bootstrap':number),builtin:fail),_,_,'/bootstrap':number,_)).
-annotation:changeMode((transition(guarded(S1,G),Q,A,T,S2):-G,transition(S1,Q,A,T,S2)),sem).
+annotation:changeMode((transition(guarded(S1,G),Q,A,T,S2):-transition(S1,Q,A,T,S2),G),sem).
