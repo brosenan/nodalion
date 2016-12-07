@@ -1,0 +1,10 @@
+'/bootstrap':signature(simulates(P,Q)::'/bootstrap':pred,[P::state,Q::state]).
+'/bootstrap':projection(simulates(P,Q)::'/bootstrap':pred,'/bootstrap':horiz(['/bootstrap':vis(P::state),'/bootstrap':symbol(8831),'/bootstrap':vis(Q::state)])).
+'/bootstrap':alias(simulates(P,Q)::'/bootstrap':pred,!'>~').
+'/util':behavior(simulates(P,Q)::'/bootstrap':pred,!'should succed if all transitions in Q are supported by P',simulates(alt(annotation:shrink(seq(trans('/impred':uuid,!a,'/bootstrap':string),trans('/impred':uuid,!b,'/bootstrap':string))),annotation:shrink(seq(trans('/impred':now,1,'/bootstrap':number),trans('/impred':now,2,'/bootstrap':number)))),annotation:shrink(seq(trans('/impred':uuid,!a,'/bootstrap':string),trans('/impred':uuid,!b,'/bootstrap':string))))).
+'/util':behavior(simulates(P,Q)::'/bootstrap':pred,!'should fail if Q has a path not in P',\+simulates(annotation:shrink(seq(trans('/impred':uuid,!a,'/bootstrap':string),trans('/impred':uuid,!b,'/bootstrap':string))),annotation:shrink(alt(annotation:shrink(seq(trans('/impred':uuid,!a,'/bootstrap':string),trans('/impred':uuid,!b,'/bootstrap':string))),annotation:shrink(seq(trans('/impred':now,1,'/bootstrap':number),trans('/impred':now,2,'/bootstrap':number))))))).
+'/util':behavior(simulates(P,Q)::'/bootstrap':pred,!'should recurse',\+simulates(annotation:shrink(seq(trans('/impred':uuid,!a,'/bootstrap':string),trans('/impred':uuid,!b,'/bootstrap':string))),annotation:shrink(annotation:shrink(seq(trans('/impred':uuid,!a,'/bootstrap':string),alt(trans('/impred':uuid,!b,'/bootstrap':string),trans('/impred':now,1,'/bootstrap':number))))))).
+annotation:changeMode((simulates(P,Q):-'/bootstrap':forall(transition(Q,Task,Ans,T,QPrime),annotation:parentheses(and(transition(P,Task,Ans,T,PPrime),simulates(PPrime,QPrime))))),sem).
+'/bootstrap':signature(and(A,B)::'/bootstrap':pred,[A::'/bootstrap':pred,B::'/bootstrap':pred]).
+'/bootstrap':projection(and(A,B)::'/bootstrap':pred,'/bootstrap':horiz(['/bootstrap':vis(A::'/bootstrap':pred),'/bootstrap':symbol(8743),'/bootstrap':vis(B::'/bootstrap':pred)])).
+and(A,B):-A,B.
